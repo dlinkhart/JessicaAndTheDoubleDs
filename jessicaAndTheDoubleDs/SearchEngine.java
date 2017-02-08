@@ -1,6 +1,7 @@
-/*Created by Jessica Stepp, Douglas Shirilla, and Douglas Linkhart
- *  JavaII 2017 project Search Engine:
- *  creating a GUI file search
+/*Created by Jessica Stepp, Douglas Shirilla,
+ * Douglas Linkhart and Brandon Quijano
+ * JavaII 2017 project Search Engine:
+ * creating a GUI file search
  * that includes file upload and delete tools.
  */
 package jessicaAndTheDoubleDs;// Team name
