@@ -48,7 +48,7 @@ public class SearchEngine extends JPanel{
 		filler.setHorizontalAlignment(JLabel.CENTER);
 		panel.add(filler);
 		return panel;
-	}//end filler componenet
+	}//end filler component
 	
 	//build main container
 	private static void createAndShowGUI() {
