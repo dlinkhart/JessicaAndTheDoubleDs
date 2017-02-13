@@ -32,10 +32,15 @@ public class SearchEngine extends JPanel implements ActionListener{
 		//add tab and associated filler component
 		tabbedPane.addTab("Search", searchPanel);
 		
+		//Create text area for user to enter text to search for
+		JTextArea textArea = new JTextArea("Enter search criteria here",20, 40);
+		searchPanel.add(textArea);
+		
 		// Create buttons
 		JButton btnSearch = new JButton( "Search" );
 		
-        /* To use absolute layout, use this code:
+		
+        /*To use absolute layout, use this code:
  		searchPanel.setLayout(null);
 		btnSearch.setBounds(50, 50, 100, 100); 
 		This also kills the initial panel text,
@@ -166,6 +171,11 @@ public class SearchEngine extends JPanel implements ActionListener{
 	 * it should be a text box for 
 	 * the user to type into
 	 */
+	/*With the text box created, is this comment still necessary?
+	 * 
+	 */
+	
+	
 	protected JComponent textPanel(String text){
 		JPanel panel = new JPanel(false);
 		JLabel filler = new JLabel(text);
