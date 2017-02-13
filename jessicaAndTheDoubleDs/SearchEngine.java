@@ -33,7 +33,10 @@ public class SearchEngine extends JPanel implements ActionListener{
 		tabbedPane.addTab("Search", searchPanel);
 		
 		//Create text area for user to enter text to search for
-		JTextArea textArea = new JTextArea("Enter search criteria here",10, 40);
+		JTextArea textArea = new JTextArea("Enter search criteria here",10,40);
+		//enable text wrap to prevent unwanted growth of text area
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
 		searchPanel.add(textArea);
 		
 		// Create buttons
@@ -74,6 +77,8 @@ public class SearchEngine extends JPanel implements ActionListener{
 		
 		//Add result text area to show matched files when search is completed
 		JTextArea resultTextArea = new JTextArea(10, 40);
+		resultTextArea.setLineWrap(true);
+		resultTextArea.setWrapStyleWord(true);
 		searchPanel.add(resultTextArea);
 		
 		// Set buttons to according to status that was initialized previously
