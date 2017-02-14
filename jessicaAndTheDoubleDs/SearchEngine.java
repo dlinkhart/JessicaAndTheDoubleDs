@@ -10,7 +10,6 @@ import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
 
-
 public class SearchEngine extends JPanel implements ActionListener{	
 	
 	//Eclipse whines if this line isn't here...
@@ -33,21 +32,24 @@ public class SearchEngine extends JPanel implements ActionListener{
 		//add tab and associated filler component
 		tabbedPane.addTab("Search", searchPanel);
 		
+		//Create text area for user to enter text to search for
+		JTextArea textArea = new JTextArea("Enter search criteria here",10,40);
+		//enable text wrap to prevent unwanted growth of text area
+		textArea.setLineWrap(true);
+		textArea.setWrapStyleWord(true);
+		searchPanel.add(textArea);
+		
 		// Create buttons
 		JButton btnSearch = new JButton( "Search" );
 		
-		//Create Search Bar
-		JTextField textField = new JTextField(" ", 20);
-		textField.setActionCommand("search");
-		textField.addActionListener( this );
 		
-        /* To use absolute layout, use this code:
+        /*To use absolute layout, use this code:
  		searchPanel.setLayout(null);
 		btnSearch.setBounds(50, 50, 100, 100); 
 		This also kills the initial panel text,
 		but it could be put back with a label */ 
 		
-	    btnSearch.setActionCommand( "Search Bar " ); 
+	    btnSearch.setActionCommand( "search" ); 
 	    btnSearch.addActionListener( this );
 	    
 	    JRadioButton btnOr     = new JRadioButton( "OR" );
@@ -72,7 +74,12 @@ public class SearchEngine extends JPanel implements ActionListener{
 		searchPanel.add( btnOr );
 		searchPanel.add( btnAnd );
 		searchPanel.add( btnPhrase );
-		searchPanel.add( textField );
+		
+		//Add result text area to show matched files when search is completed
+		JTextArea resultTextArea = new JTextArea(10, 40);
+		resultTextArea.setLineWrap(true);
+		resultTextArea.setWrapStyleWord(true);
+		searchPanel.add(resultTextArea);
 		
 		// Set buttons to according to status that was initialized previously
 		btnOr.setSelected( orBtnSelected );
@@ -169,8 +176,13 @@ public class SearchEngine extends JPanel implements ActionListener{
 		}
 	} // actionPerformed
 	
-	
-	
+	/*this is just a filler component
+	 * it should be a text box for 
+	 * the user to type into
+	 */
+	/*With the text box created, is this comment still necessary?
+	 * 
+	 */
 	
 	
 	protected JComponent textPanel(String text){
