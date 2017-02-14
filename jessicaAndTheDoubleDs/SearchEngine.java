@@ -2,7 +2,7 @@
  * Douglas Linkhart, and Brandon Quijano
  * Java II 2017 Project 3 - Search Engine:
  * creating a GUI file search
- * that includes file upload and delete tools.
+ * that includes file upload and deletion tools.
  */
 package jessicaAndTheDoubleDs; // Team name
 
@@ -20,9 +20,11 @@ public class SearchEngine extends JPanel implements ActionListener{
 			andBtnSelected    = false,
 			phraseBtnSelected = false;
 	
+	// These need to be accessible outside of the SearchEngine method
 	JTextField txtSearchTerms = new JTextField( "Enter search terms here", 40 );
 	JTextArea txtResults = new JTextArea(22, 40);
 	
+	// Search Terms
 	StringBuilder sbStringToParse = new StringBuilder();
 	
 	public SearchEngine(){
@@ -34,13 +36,12 @@ public class SearchEngine extends JPanel implements ActionListener{
 		
 		// Add Search panel
 		JComponent searchPanel = textPanel( "" );
-		//add tab and associated filler component
+		// Add Search tab
 		tabbedPane.addTab("Search", searchPanel);
 		
-		//Create text area for user to enter text to search for
-//		JTextField txtSearchTerms = new JTextField( "Enter search terms here", 40 );
-		//enable text wrap to prevent unwanted growth of text area
+		// Add border to Search Term text box
 		txtSearchTerms.setBorder(BorderFactory.createLineBorder(Color.black));
+		// Add Search Terms text box to panel
 		searchPanel.add(txtSearchTerms);
 		
 		// Create buttons
@@ -52,7 +53,7 @@ public class SearchEngine extends JPanel implements ActionListener{
 		This also kills the initial panel text,
 		but it could be put back with a label */ 
 		
-		// add a cooment here
+		// add a comment here
 	    btnSearch.setActionCommand( "search" ); 
 	    btnSearch.addActionListener( this );
 	    
@@ -79,21 +80,23 @@ public class SearchEngine extends JPanel implements ActionListener{
 		searchPanel.add( btnAnd );
 		searchPanel.add( btnPhrase );
 		
-		//Add result text area to show matched files when search is completed
-//		JTextArea txtResults = new JTextArea(22, 40);
-		txtResults.setLineWrap(true);
-		txtResults.setWrapStyleWord(true);
-		txtResults.setBorder(BorderFactory.createLineBorder(Color.black));
-		searchPanel.add(txtResults);
-		
 		// Set buttons to according to status that was initialized previously
 		btnOr.setSelected( orBtnSelected );
 		btnAnd.setSelected( andBtnSelected );
 		btnPhrase.setSelected( phraseBtnSelected );
 		
-		//add filler component
+		// Add result text area to show matched files when search is completed
+		// Set line wrapping
+		txtResults.setLineWrap(true);
+		txtResults.setWrapStyleWord(true);
+		// Add border to Results box
+		txtResults.setBorder(BorderFactory.createLineBorder(Color.black));
+		// Add Results box to panel
+		searchPanel.add(txtResults);
+		
+		// Add File Upload/Update panel
 		JComponent files = textPanel("File upload/update panel");
-		//add tab and associated filler component
+		// Add Files tab 
 		tabbedPane.addTab("Files", files);
 		
 		// Build string for About tab using HTML
@@ -122,7 +125,6 @@ public class SearchEngine extends JPanel implements ActionListener{
 		tabbedPane.addTab("About", aboutPanel);
 		
 		add(tabbedPane);
-		
 	}//end SearchEngine()
 	
 	// Event handler
@@ -143,71 +145,25 @@ public class SearchEngine extends JPanel implements ActionListener{
 			StringBuilder sbResults = new StringBuilder();
 			sbResults.append( "No results found. \r\n \r\n" );
 			sbResults.append( "You searched for:\r\n \r\n" );
-		//	sbResults.append( txtSearchTerms.getText() );
 			
-			
-			while ( sbStringToParse.length() > 0 )
-					{
+			while ( sbStringToParse.length() > 0 ) // While there are still Search Terms in the string
+			{
+				nextLexeme = getNextLexeme(); // Get the next Search Term (lexeme)
+				sbResults.append( nextLexeme + " " ); 
 				
-	//			sbResults.append("lex before = x." + nextLexeme + ".x \r\n");
-			//	sbResults.append( "x." + sbStringToParse.toString() + ".x" + "\r\n" );
-				nextLexeme = getNextLexeme();
-				
-				if ( orBtnSelected  )
-				{
-					sbResults.append( nextLexeme );
-					if ( sbStringToParse.length() > 0 )
-					sbResults.append( " OR " );
-				}
-	//			sbResults.append("lex after = x." + nextLexeme + ".x \r\n");
-		//		sbResults.append( "x." + sbStringToParse.toString() + ".x" + "\r\n" );
-				
-				if ( andBtnSelected  )
-				{
-					sbResults.append( nextLexeme );
-					if ( sbStringToParse.length() > 0 )
-					sbResults.append( " AND " );
-				}
-				
-				if ( phraseBtnSelected  )
-				{
-					sbResults.append( nextLexeme + " " );
-					if ( sbStringToParse.length() <= 0 )
+				if ( orBtnSelected && sbStringToParse.length() > 0 )
+					sbResults.append( "OR " );
+								
+				if ( andBtnSelected && sbStringToParse.length() > 0 )
+					sbResults.append( "AND " );
+								
+				if ( phraseBtnSelected && sbStringToParse.length() <= 0 )
 					sbResults.append( "(PHRASE; terms in this order) " );
-				}
-			}
+			} // While
 			
-		//	sbResults.append("x.");
-			
-
-							
 			txtResults.setText( sbResults.toString() );
 			
-			if ( orBtnSelected )
-			{
-				JOptionPane.showMessageDialog( 
-				null, 
-				"...and when you clicked it, OR was selected!", 
-				"SEARCH!!!", 
-				JOptionPane.INFORMATION_MESSAGE );
-			}
-			else if ( andBtnSelected )
-			{
-				JOptionPane.showMessageDialog( 
-				null, 
-				"...and when you clicked it, AND was selected!", 
-				"SEARCH!!!", 
-				JOptionPane.INFORMATION_MESSAGE );
-			}
-			else if ( phraseBtnSelected )
-			{
-				JOptionPane.showMessageDialog( 
-				null, 
-				"...and when you clicked it, PHRASE was selected!", 
-				"SEARCH!!!", 
-				JOptionPane.INFORMATION_MESSAGE );
-			}
-		}
+		} // If search
 		else if (e.getActionCommand().equals("or"))
 		{
 			orBtnSelected     = true;
@@ -236,21 +192,21 @@ public class SearchEngine extends JPanel implements ActionListener{
 	 * 
 	 */
 	
+	// Parses the Search Term string by returning the next lexeme
 	public String getNextLexeme()
 	{
 		int i;
 		String lexeme;
 		
-		for ( i = 0; i < sbStringToParse.length(); i++ )
-			if ( sbStringToParse.substring(i, i + 1).equals( " " ) )
+		for ( i = 0; i < sbStringToParse.length(); i++ ) // Loop to look at each character in the string
+			if ( sbStringToParse.substring(i, i + 1).equals( " " ) ) // If a space is found, marking the end of a lexeme
 				break;
 				
-		lexeme = sbStringToParse.substring(0, i);
-		sbStringToParse.delete( 0, i + 1);
+		lexeme = sbStringToParse.substring(0, i); // Copy the first lexeme found in the string
+		sbStringToParse.delete( 0, i + 1);  // Remove the lexeme from the string
 
 		return lexeme;
 	} // getNextLexeme
-	
 	
 	protected JComponent textPanel(String text){
 		JPanel panel = new JPanel(false);
@@ -269,9 +225,9 @@ public class SearchEngine extends JPanel implements ActionListener{
 		frame.add(new SearchEngine(), BorderLayout.CENTER);
 		
 		
-		frame.setSize(500,500);
-		frame.setLocationRelativeTo(null);
-		frame.setVisible(true);
+		frame.setSize( 500, 500);
+		frame.setLocationRelativeTo( null ); // Center frame on screen
+		frame.setVisible( true );
 	}//end creatAndShowGUI()
 
 	public static void main(String[] args) {
