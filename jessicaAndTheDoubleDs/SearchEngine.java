@@ -49,6 +49,7 @@ public class SearchEngine extends JPanel implements ActionListener{
 		This also kills the initial panel text,
 		but it could be put back with a label */ 
 		
+		// add a cooment here
 	    btnSearch.setActionCommand( "search" ); 
 	    btnSearch.addActionListener( this );
 	    
